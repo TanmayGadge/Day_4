@@ -8,6 +8,12 @@ function collideSprites(){
     player.collide(brick7.body);
     player.collide(brick8.body);
     player.collide(brick9.body);
+    player.collide(brick10.body);
+    player.collide(brick11.body);
+    player.collide(brick12.body);
+    player.collide(brick13.body);
+    player.collide(brick14.body);
+    
     
     player.collide(hurdle.body);
     player.collide(hurdle2.body);

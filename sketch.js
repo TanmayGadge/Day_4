@@ -6,9 +6,12 @@ var bombAnimation, bombImg, bomb, bomb2;
 
 var ground, hurdle2, hurdle3, hurdle4, hurdle5, hurdle6, hurdle7, hurdle8, hurdle9, hurdle10, hurdle11, hurdle12, hurdle13, hurdle14;
 var brick2, brick3, brick4, brick5, brick6, brick7, brick8, brick9, brick10, brick11, brick12, brick13, brick14;
+var brick15, brick16, brick17, brick18, brick19, brick20;
+
 var coinAnimation;
 
-var coin, coin2, coin3, coin4, coin5, coin6, coin7, coin8, coin9, coin10;
+var coin, coin2, coin3, coin4, coin5, coin6, coin7, coin8, coin9, coin10, cooin11, coin12, coin13, coin14;
+var coin15, coin16, coin17;
 var coinCount;
 var gameOverImg, gameOver;
 
@@ -59,7 +62,7 @@ function preload() {
 
 
 function setup() {
-  createCanvas(1340, 850);
+  createCanvas(1360, 850);
   
   coinCount = 0;
   coinCountSprite = createSprite(75, 100);
@@ -77,7 +80,7 @@ function setup() {
   player.addAnimation("Steady Left", playerSteadyLeft);
   player.scale = 0.5;
 
-  bomb = new Bomb(555, 490);
+  bomb = new Bomb(620, 560);
   bomb2 = new Bomb(900, 660);
   // bomb.body.addAnimation("Explosion", bombAnimation);
 
@@ -85,15 +88,23 @@ function setup() {
 
   coin2 = new Coin(450, 570);
   coin3 = new Coin(505, 570);
-  coin4 = new Coin(615, 570);
-  coin5 = new Coin(650, 570);
+  coin4 = new Coin(555, 490);
+  coin5 = new Coin(650, 400);
 
   coin6 = new Coin(900, 480);
   coin7 = new Coin(955, 480);
   coin8 = new Coin(1010, 480);
   coin9 = new Coin(1065, 480);
 
-
+  coin10 = new Coin(555, 735);
+  coin11 = new Coin(605, 735);
+  coin12 = new Coin(660, 735);
+  coin13 = new Coin(715, 735);
+  coin14 = new Coin(770, 735);
+  coin15 = new Coin(825, 735);
+  coin16 = new Coin(500, 735);
+  coin17 = new Coin(445, 735);
+  
   hurdle = new Hurdle(380, 715);
   hurdle2 = new Hurdle(555, 545);
   hurdle3 = new Hurdle(900, 715);
@@ -109,10 +120,17 @@ function setup() {
   brick8 = new Brick(1010, 510);
   brick9 = new Brick(1065, 510);
 
+  brick10 = new Brick(790, 550);
+  brick11 = new Brick(790, 585);
+
+  brick12 = new Brick(750, 430);
+  brick13 = new Brick(700, 430);
+  brick14 = new Brick(650, 430);
+  
   // player.depth = hurdle.body.depth;
   // // hurdle2.depth = player.depth;
   // // player.depth = hurdle3.body.depth;
-  player.depth = brick.body.depth;
+  // player.depth = brick.body.depth;
 
   // player.depth += 1;
 

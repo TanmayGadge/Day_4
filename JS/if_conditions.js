@@ -31,7 +31,7 @@ function movements() {
         player.velocityY = 15;
     }
 
-    if (keyDown(RIGHT_ARROW) && keyWentDown(UP_ARROW)) {
+    if ((keyDown(RIGHT_ARROW) && keyWentDown(UP_ARROW)) || (keyDown("d") && keyWentDown("w"))) {
         player.velocityX = 5;
         player.velocityY = -7;
     }
@@ -39,7 +39,7 @@ function movements() {
         player.velocityX = 5;
         player.velocityY = -7;
     }
-    if (keyDown(LEFT_ARROW) && keyWentDown(UP_ARROW)) {
+    if ((keyDown(LEFT_ARROW) && keyWentDown(UP_ARROW)) || (keyDown("a") && keyWentDown("w"))) {
         player.velocityX = -5;
         player.velocityY = -7;
     }
@@ -47,27 +47,10 @@ function movements() {
         player.velocityX = -5;
         player.velocityY = -7;
     }
-    if (keyDown(LEFT_ARROW) && keyDown(RIGHT_ARROW)) {
+    if ((keyDown(LEFT_ARROW) && keyDown(RIGHT_ARROW)) || (keyDown("a") && keyDown("d"))) {
         player.velocityX = 0;
         player.velocityY = 0;
     }
-
- 
-
-    // if (player.isTouching(bomb.body)) {
-    //     player.velocityX = 0;
-    //     player.velocityY = 0;
-    //     bomb.body.changeAnimation("Explosion", bombAnimation);
-    //     setTimeout(function () {bomb.body.destroy(); }, 3000);
-    //     setTimeout(function(){player.destroy()}, 2000);
-    // }
-    // if (player.isTouching(bomb2.body)) {
-    //     player.velocityX = 0;
-    //     player.velocityY = 0;
-    //     bomb.body.changeAnimation("Explosion", bombAnimation);
-    //     setTimeout(function () {bomb2.body.destroy(); }, 3000);
-    //     setTimeout(function(){player.destroy()}, 2000);
-    // }
 
     destroyObjects(player, bomb.body);
     destroyObjects(player, bomb2.body);
@@ -81,5 +64,13 @@ function movements() {
     collectCoins(player, coin7.body);
     collectCoins(player, coin8.body);
     collectCoins(player, coin9.body);
+    collectCoins(player, coin10.body);
+    collectCoins(player, coin11.body);
+    collectCoins(player, coin12.body);
+    collectCoins(player, coin13.body);
+    collectCoins(player, coin14.body);
+    collectCoins(player, coin15.body);
+    collectCoins(player, coin16.body);
+    collectCoins(player, coin17.body);
 }
 
