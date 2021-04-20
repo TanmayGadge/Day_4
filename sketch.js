@@ -8,6 +8,7 @@ var ground, hurdle2, hurdle3, hurdle4, hurdle5, hurdle6, hurdle7, hurdle8, hurdl
 var brick2, brick3, brick4, brick5, brick6, brick7, brick8, brick9, brick10, brick11, brick12, brick13, brick14;
 var brick15, brick16, brick17, brick18, brick19, brick20;
 
+var baseValue;
 var coinAnimation;
 
 var coin, coin2, coin3, coin4, coin5, coin6, coin7, coin8, coin9, coin10, cooin11, coin12, coin13, coin14;
@@ -69,7 +70,7 @@ function setup() {
   coinCountSprite.addAnimation("Score", coinAnimation);
   coinCountSprite.scale = 0.3;
   
-  gameOver = createSprite(width/2, 425);
+  gameOver = createSprite(width/2, 325);
   gameOver.addImage(gameOverImg);
   gameOver.visible = false;
 
@@ -80,7 +81,7 @@ function setup() {
   player.addAnimation("Steady Left", playerSteadyLeft);
   player.scale = 0.5;
 
-  bomb = new Bomb(620, 560);
+  bomb = new Bomb(650, 560);
   bomb2 = new Bomb(900, 660);
   // bomb.body.addAnimation("Explosion", bombAnimation);
 
@@ -131,7 +132,8 @@ function setup() {
   // // hurdle2.depth = player.depth;
   // // player.depth = hurdle3.body.depth;
   // player.depth = brick.body.depth;
-
+  console.log(brick.body.height);
+  console.log(brick.body.y);
   // player.depth += 1;
 
   ground = createSprite(600, 760, 2000, 10);
@@ -146,6 +148,9 @@ function setup() {
   // brick.body.debug = true;
   bomb.debug = true;
   bomb.body.setCollider("rectangle", 0, 0, bomb.width+10, bomb.height+100);
+
+  baseValue = hurdle.body.y;
+  
 }
 
 function draw() {
@@ -156,14 +161,33 @@ function draw() {
   fill("white");
   text(": "+coinCount, 100, 110);
 
-  collideSprites();
+  if(player.isTouching(ground)){
+    baseValue = 710;
+  }
 
-  player.collide(ground);
+  if(player.isTouching(hurdle.body)){
+    baseValue = hurdle2.body.y;
+}
+
+  if(player.isTouching(hurdle2.body)){
+    baseValue = brick12.body.y;
+  }
+
+  if(player.isTouching(brick12.body)||player.isTouching(brick13.body)||player.isTouching(brick14.body)){
+    baseValue = brick12.body.y - 100;
+    
+  }
+  
+collideSprites();
+
+player.collide(ground);
+movements();
 
   ground.width += 200;
 
-  movements();
   player.velocityY += 0.25;
+
+  console.log(baseValue);
 
   drawSprites();
 }

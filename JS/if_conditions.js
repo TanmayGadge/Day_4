@@ -22,7 +22,7 @@ function movements() {
         player.changeAnimation("Steady Left", playerSteadyLeft);
     }
 
-    if (keyWentDown(UP_ARROW) || keyWentDown("w")) {
+    if ((keyWentDown(UP_ARROW) || keyWentDown("w")) && player.y >= baseValue) {
         player.velocityX = 0;
         player.velocityY = -7;
     }
@@ -31,23 +31,23 @@ function movements() {
         player.velocityY = 15;
     }
 
-    if ((keyDown(RIGHT_ARROW) && keyWentDown(UP_ARROW)) || (keyDown("d") && keyWentDown("w"))) {
+    if (((keyDown(RIGHT_ARROW) && keyWentDown(UP_ARROW)) || (keyDown("d") && keyWentDown("w"))) && player.y >= baseValue) {
         player.velocityX = 5;
         player.velocityY = -7;
     }
-    if (keyDown(UP_ARROW) && keyWentDown(RIGHT_ARROW)) {
+    if ((keyDown(UP_ARROW) && keyWentDown(RIGHT_ARROW)) && player.y >= baseValue) {
         player.velocityX = 5;
         player.velocityY = -7;
     }
-    if ((keyDown(LEFT_ARROW) && keyWentDown(UP_ARROW)) || (keyDown("a") && keyWentDown("w"))) {
+    if (((keyDown(LEFT_ARROW) && keyWentDown(UP_ARROW)) || (keyDown("a") && keyWentDown("w"))) && player.y >= baseValue) {
         player.velocityX = -5;
         player.velocityY = -7;
     }
-    if (keyDown(UP_ARROW) && keyWentDown(LEFT_ARROW)) {
+    if ((keyDown(UP_ARROW) && keyWentDown(LEFT_ARROW)) && player.y >= baseValue) {
         player.velocityX = -5;
         player.velocityY = -7;
     }
-    if ((keyDown(LEFT_ARROW) && keyDown(RIGHT_ARROW)) || (keyDown("a") && keyDown("d"))) {
+    if (((keyDown(LEFT_ARROW) && keyDown(RIGHT_ARROW)) || (keyDown("a") && keyDown("d"))) && player.y >= baseValue) {
         player.velocityX = 0;
         player.velocityY = 0;
     }
@@ -72,5 +72,7 @@ function movements() {
     collectCoins(player, coin15.body);
     collectCoins(player, coin16.body);
     collectCoins(player, coin17.body);
+
+
 }
 
