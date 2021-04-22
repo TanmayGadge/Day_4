@@ -2,25 +2,39 @@ var player, hurdle, brick;
 var bgImg, hurdleImg, brickImg, playerRightAnimation, playerLeftAnimation;
 
 var playerSteady, playerSteadyLeft;
-var bombAnimation, bombImg, bomb, bomb2;
+var bombAnimation, bombImg, bomb, bomb2, bomb3;
 
 var ground, hurdle2, hurdle3, hurdle4, hurdle5, hurdle6, hurdle7, hurdle8, hurdle9, hurdle10, hurdle11, hurdle12, hurdle13, hurdle14;
+
 var brick2, brick3, brick4, brick5, brick6, brick7, brick8, brick9, brick10, brick11, brick12, brick13, brick14;
-var brick15, brick16, brick17, brick18, brick19, brick20;
+var brick15, brick16, brick17, brick18, brick19, brick20, brick21, brick22, brick23, brick24, brick25, brick26, brick27, brick28;
+var brick29, brick30, brick31, brick32, brick33, brick34, brick35, brick36, brick37, brick38, brick39, brick40;
 
 var baseValue;
 var coinAnimation;
 
 var coin, coin2, coin3, coin4, coin5, coin6, coin7, coin8, coin9, coin10, cooin11, coin12, coin13, coin14;
-var coin15, coin16, coin17;
+var coin15, coin16, coin17, coin18, coin19, coin20, coin21, coin22, coin23, coin24, coin25, coin26, coin27, coin28, coin29, coin30;
+var coin31, coin32, coin33, coin34, coin35, coin36, coin37, coin38, coin39, coin40, coin41, coin42, coin43, coin44, coin45;
+var coin46, coin47;
+
+var coinSound, startSound, gameOverSound;
+
 var coinCount;
+var player2, player2Img;
 var gameOverImg, gameOver;
+var flag, flag2;
 
 
 function preload() {
   bgImg = loadImage("Images/background2.png");
   hurdleImg = loadImage("Images/hurdle-removebg-preview.png");
   brickImg = loadImage("Images/bricks.png");
+  player2Img = loadImage("Images/player2.png");
+
+  coinSound = loadSound("Sounds/coinSound.wav");
+  startSound = loadSound("Sounds/startSound.wav");
+  gameOverSound = loadSound("Sounds/gameOverSound.wav");
 
   playerRightAnimation = loadAnimation("Images/Character/L-R/characterSprite1-removebg-preview.png",
     "Images/Character/L-R/characterSprite2-removebg-preview.png",
@@ -69,8 +83,11 @@ function setup() {
   coinCountSprite = createSprite(75, 100);
   coinCountSprite.addAnimation("Score", coinAnimation);
   coinCountSprite.scale = 0.3;
-  
-  gameOver = createSprite(width/2, 325);
+
+  flag = false;
+  flag2 = false;
+
+  gameOver = createSprite(width / 2, 190);
   gameOver.addImage(gameOverImg);
   gameOver.visible = false;
 
@@ -81,60 +98,17 @@ function setup() {
   player.addAnimation("Steady Left", playerSteadyLeft);
   player.scale = 0.5;
 
-  bomb = new Bomb(650, 560);
-  bomb2 = new Bomb(900, 660);
-  // bomb.body.addAnimation("Explosion", bombAnimation);
+  player2 = createSprite(980, 715);
+  player2.addImage(player2Img);
+  player2.scale = 0.75;
 
-  coin = new Coin(200, 715);
+  createBombs();
 
-  coin2 = new Coin(450, 570);
-  coin3 = new Coin(505, 570);
-  coin4 = new Coin(555, 490);
-  coin5 = new Coin(650, 400);
+  createCoins();
+  createHurdles();
 
-  coin6 = new Coin(900, 480);
-  coin7 = new Coin(955, 480);
-  coin8 = new Coin(1010, 480);
-  coin9 = new Coin(1065, 480);
 
-  coin10 = new Coin(555, 735);
-  coin11 = new Coin(605, 735);
-  coin12 = new Coin(660, 735);
-  coin13 = new Coin(715, 735);
-  coin14 = new Coin(770, 735);
-  coin15 = new Coin(825, 735);
-  coin16 = new Coin(500, 735);
-  coin17 = new Coin(445, 735);
-  
-  hurdle = new Hurdle(380, 715);
-  hurdle2 = new Hurdle(555, 545);
-  hurdle3 = new Hurdle(900, 715);
-
-  brick = new Brick(450, 600);
-  brick2 = new Brick(505, 600);
-  brick3 = new Brick(560, 600);
-  brick4 = new Brick(615, 600);
-  brick5 = new Brick(670, 600);
-
-  brick6 = new Brick(900, 510);
-  brick7 = new Brick(955, 510);
-  brick8 = new Brick(1010, 510);
-  brick9 = new Brick(1065, 510);
-
-  brick10 = new Brick(790, 550);
-  brick11 = new Brick(790, 585);
-
-  brick12 = new Brick(750, 430);
-  brick13 = new Brick(700, 430);
-  brick14 = new Brick(650, 430);
-  
-  // player.depth = hurdle.body.depth;
-  // // hurdle2.depth = player.depth;
-  // // player.depth = hurdle3.body.depth;
-  // player.depth = brick.body.depth;
-  console.log(brick.body.height);
-  console.log(brick.body.y);
-  // player.depth += 1;
+  createBricks();
 
   ground = createSprite(600, 760, 2000, 10);
   ground.x = ground.width / 2;
@@ -143,51 +117,125 @@ function setup() {
 
   player.setCollider("rectangle", 0, 0, player.width - 10, player.height - 50);
 
-  // hurdle.body.debug = true;
-  // player.debug = true;
-  // brick.body.debug = true;
   bomb.debug = true;
-  bomb.body.setCollider("rectangle", 0, 0, bomb.width+10, bomb.height+100);
+  bomb.body.setCollider("rectangle", 0, 0, bomb.width + 10, bomb.height + 100);
 
   baseValue = hurdle.body.y;
-  
+
+  startSound.play();
+
 }
 
 function draw() {
   background(bgImg);
-  // bomb.body.collide(hurdle2.body);
+
 
   textSize(50);
   fill("white");
-  text(": "+coinCount, 100, 110);
+  text(": " + coinCount, 100, 110);
 
-  if(player.isTouching(ground)){
+  if (player.isTouching(ground)) {
     baseValue = 710;
   }
 
-  if(player.isTouching(hurdle.body)){
+  if (player.isTouching(hurdle.body)) {
     baseValue = hurdle2.body.y;
-}
+  }
 
-  if(player.isTouching(hurdle2.body)){
+  if (player.isTouching(hurdle2.body)) {
     baseValue = brick12.body.y;
   }
 
-  if(player.isTouching(brick12.body)||player.isTouching(brick13.body)||player.isTouching(brick14.body)){
+  if (player.isTouching(brick12.body) || player.isTouching(brick13.body) || player.isTouching(brick14.body)) {
     baseValue = brick12.body.y - 100;
-    
   }
-  
-collideSprites();
 
-player.collide(ground);
-movements();
+  if (player.isTouching(brick15.body) || player.isTouching(brick16.body) || player.isTouching(brick17.body)) {
+    baseValue = brick15.body.y - 100;
+  }
+
+  if (player.isTouching(brick18.body) || player.isTouching(brick19.body) || player.isTouching(brick20.body)) {
+    baseValue = brick18.body.y - 100;
+
+  }
+  // if (player.isTouching(hurdle4.body)){
+  //   player.x =1300;
+  // }
+
+
+  if (player.isTouching(brick24.body)) {
+    text("Press Space to travel", 200, 100);
+    if (keyWentDown("space")) {
+      player.y = 715;
+      player.x = 1000;
+    }
+  }
+
+  if (keyWentDown("k") || player.x > 1090&& flag === false) {
+    // brick25.body.visible = true;
+    // brick26.body.visible = true;
+    // brick27.body.visible = true;
+    // brick28.body.visible = true;
+    // brick29.body.visible = true;
+    // brick30.body.visible = true;
+    brick25 = new Brick(1050, 735);
+    brick26 = new Brick(1050, 700);
+    brick27 = new Brick(1050, 665);
+    brick28 = new Brick(1050, 630);
+    brick29 = new Brick(1050, 595);
+    brick30 = new Brick(1050, 560);
+    flag = true;
+
+    push();
+    textSize(20);
+    fill("yellow");
+    text("Stand on brick which doesn't have a coin.\npress 'r' to Re-Spawn", width / 2 - 100, 200);
+    pop();
+
+  }
+
+  if (keyWentDown('r') && player.x > 1090) {
+    player.x = 50;
+    player.y = 740;
+
+    brick25.body.destroy();
+    brick26.body.destroy();
+    brick27.body.destroy();
+    brick28.body.destroy();
+    brick29.body.destroy();
+    brick30.body.destroy();
+  }
+
+  if (brick25 && brick26 && brick27 && brick28 && brick29 && brick30) {
+    player.collide(brick25.body);
+    player.collide(brick26.body);
+    player.collide(brick27.body);
+    player.collide(brick28.body);
+    player.collide(brick29.body);
+    player.collide(brick30.body);
+  }
+
+  if (player.isTouching(player2) && flag2 === false) {
+    player2.destroy();
+    flag2 = true;
+  }
+
+  if(flag2){
+    push();
+    textSize(20);
+    text("Friend Rescued", width / 2, height / 4);
+    pop();
+  }
+  collideSprites();
+
+  player.collide(ground);
+  movements();
 
   ground.width += 200;
 
   player.velocityY += 0.25;
 
-  console.log(baseValue);
+  // console.log(baseValue);
 
   drawSprites();
 }

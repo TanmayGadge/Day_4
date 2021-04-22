@@ -6,5 +6,6 @@ function destroyObjects(b1, b2){
         setTimeout(function () {b2.destroy(); }, 3000);
         setTimeout(function(){b1.destroy()}, 2000);
         gameOver.visible = true;
+        gameOverSound.play();
     }
 }

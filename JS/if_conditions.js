@@ -54,6 +54,7 @@ function movements() {
 
     destroyObjects(player, bomb.body);
     destroyObjects(player, bomb2.body);
+    destroyObjects(player, bomb3.body);
 
     collectCoins(player, coin.body);
     collectCoins(player, coin2.body);
@@ -72,6 +73,27 @@ function movements() {
     collectCoins(player, coin15.body);
     collectCoins(player, coin16.body);
     collectCoins(player, coin17.body);
+    collectCoins(player, coin18.body);
+    collectCoins(player, coin19.body);
+    collectCoins(player, coin20.body);
+    collectCoins(player, coin21.body);
+    collectCoins(player, coin22.body);
+    collectCoins(player, coin23.body);
+    collectCoins(player, coin24.body);
+    collectCoins(player, coin25.body);
+    collectCoins(player, coin26.body);
+    collectCoins(player, coin27.body);
+    collectCoins(player, coin28.body);
+    collectCoins(player, coin29.body);
+    collectCoins(player, coin30.body);
+    collectCoins(player, coin31.body);
+    collectCoins(player, coin32.body);
+    collectCoins(player, coin33.body);
+    collectCoins(player, coin34.body);
+    // collectCoins(player, coin35.body);
+    collectCoins(player, coin36.body);
+    collectCoins(player, coin37.body);
+    collectCoins(player, coin38.body);
 
 
 }
